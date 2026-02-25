@@ -18,7 +18,7 @@ export default function AddNewProductDialog() {
       </DialogTrigger>
 
       <DialogContent
-        className="max-w-4xl! w-full max-h-[90vh] overflow-y-auto rounded-2xl p-6"
+        className="max-w-4xl! w-full max-h-[80vh] overflow-y-auto rounded-2xl p-6"
         dir="rtl"
       >
         <CreateProductForm />

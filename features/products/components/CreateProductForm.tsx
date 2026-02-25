@@ -26,80 +26,8 @@ import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
 import AddFeatures from "./AddFeature";
 import Editor from "./Editor";
-export const brands = [
-  { label: "ریزر", value: "Razer" },
-  { label: "استیل‌سریز", value: "SteelSeries" },
-  { label: "لاجیتک جی", value: "Logitech G" },
-  { label: "هایپرایکس", value: "HyperX" },
-  { label: "کولر مستر", value: "Cooler Master" },
-  { label: "ان‌زد‌ایکس‌تی", value: "NZXT" },
-  { label: "الیان‌ویر", value: "Alienware" },
-  { label: "ام‌اس‌آی", value: "MSI" },
-  { label: "ایسوس راگ", value: "ASUS ROG" },
-  { label: "ایسر پردیتور", value: "Acer Predator" },
-  { label: "رد دراگون", value: "Redragon" },
-  { label: "ترمال‌تیک", value: "Thermaltake" },
-  { label: "کوگار", value: "Cougar" },
-  { label: "ای‌وی‌جی‌ای", value: "EVGA" },
-
-  { label: "ایسوس", value: "ASUS" },
-  { label: "ایسر", value: "Acer" },
-  { label: "اچ‌پی", value: "HP" },
-  { label: "دل", value: "Dell" },
-  { label: "لنوو", value: "Lenovo" },
-  { label: "اپل", value: "Apple" },
-  { label: "مایکروسافت سرفیس", value: "Microsoft Surface" },
-  { label: "گیگابایت", value: "Gigabyte" },
-  { label: "رزر بلید", value: "Razer Blade" },
-
-  { label: "سامسونگ", value: "Samsung" },
-  { label: "شیائومی", value: "Xiaomi" },
-  { label: "وان‌پلاس", value: "OnePlus" },
-  { label: "گوگل پیکسل", value: "Google Pixel" },
-  { label: "ریلمی", value: "Realme" },
-  { label: "آنر", value: "Honor" },
-  { label: "نوبیا رد مجیک", value: "Nubia RedMagic" },
-  { label: "ایسوس راگ فون", value: "ASUS ROG Phone" },
-
-  { label: "سونی", value: "Sony" },
-  { label: "بوز", value: "Bose" },
-  { label: "سنهایزر", value: "Sennheiser" },
-  { label: "جی‌بی‌ال", value: "JBL" },
-  { label: "بیتس", value: "Beats" },
-  { label: "استرو", value: "Astro" },
-  { label: "کریتیو", value: "Creative" },
-
-  { label: "پلی‌استیشن", value: "Sony PlayStation" },
-  { label: "ایکس‌باکس", value: "Microsoft Xbox" },
-  { label: "نینتندو", value: "Nintendo" },
-  { label: "اسکاف", value: "Scuf" },
-  { label: "پاور ای", value: "PowerA" },
-
-  { label: "اینتل", value: "Intel" },
-  { label: "ای‌ام‌دی", value: "AMD" },
-  { label: "انویدیا", value: "NVIDIA" },
-  { label: "کورسیر", value: "Corsair" },
-  { label: "جی‌اسکیل", value: "G.Skill" },
-  { label: "کینگستون", value: "Kingston" },
-  { label: "سیگیت", value: "Seagate" },
-  { label: "وسترن دیجیتال", value: "Western Digital" },
-  { label: "کروشیال", value: "Crucial" },
-  { label: "بی کوایت", value: "Be Quiet!" },
-];
-export const colors = [
-  { label: "مشکی", value: "black", hex: "#000000" },
-  { label: "سفید", value: "white", hex: "#ffffff" },
-  { label: "قرمز", value: "red", hex: "#ff0000" },
-  { label: "آبی", value: "blue", hex: "#0000ff" },
-  { label: "سبز", value: "green", hex: "#00ff00" },
-  { label: "خاکستری", value: "gray", hex: "#808080" },
-  { label: "طلایی", value: "gold", hex: "#FFD700" },
-  { label: "نقره‌ای", value: "silver", hex: "#C0C0C0" },
-  { label: "بنفش", value: "purple", hex: "#800080" },
-  { label: "آبی تیره", value: "navy", hex: "#000080" },
-  { label: "قرمز نئون", value: "neon-red", hex: "#FF073A" },
-  { label: "سبز نئون", value: "neon-green", hex: "#39FF14" },
-];
+import { brands } from "../data/brands";
+import { colors } from "../data/colors";
 
 function CreateProductForm({ product = {} }) {
   const { createProduct, isCreating } = useCreateProduct();
