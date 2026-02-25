@@ -27,7 +27,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  
   const table = useReactTable({
     data,
     columns,
@@ -41,7 +40,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="rounded-md border">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -78,7 +77,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                نتیجه ای یافت نشد.
               </TableCell>
             </TableRow>
           )}

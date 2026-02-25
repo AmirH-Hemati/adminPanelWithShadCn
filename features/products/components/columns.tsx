@@ -29,9 +29,7 @@ export const columns = (
         return (
           <div className="w-12 h-12 relative">
             <Image
-              src={`http://localhost:3000/img/products/${
-                product?.imageCover as string
-              }`}
+              src={product?.imageCover}
               alt={product.name}
               fill
               unoptimized
@@ -111,7 +109,7 @@ export const columns = (
                 <Dialog>
                   <DropdownMenuItem onClick={(e) => e.preventDefault()}>
                     <DialogTrigger asChild>
-                      <button>ویرایش  محصول</button>
+                      <button>ویرایش محصول</button>
                     </DialogTrigger>
                   </DropdownMenuItem>
 

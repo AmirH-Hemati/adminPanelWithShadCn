@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/chart";
 import { useGetPaymentStatus } from "@/features/payments/hooks/useGetPaymentStatus";
 import Spinner from "@/components/Spinner";
+import PieSkeleton from "./PieSkeleton";
 
 export const description = "A donut chart with text";
 
@@ -34,10 +35,10 @@ type OrderStatus = "pending" | "success" | "failed";
 
 export function AppPieChart() {
   const { payments, isLoading } = useGetPaymentStatus();
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <PieSkeleton />;
   return (
     <div>
-      <h1 className="text-lg font-medium mb-6">وضعیت پرداخت ها </h1>
+      <h1 className="text-lg font-medium mb-6">وضعیت پرداخت ها</h1>
 
       <ChartContainer
         config={chartConfig}
@@ -77,11 +78,11 @@ export function AppPieChart() {
       </ChartContainer>
 
       <div className="mt-4 flex flex-col gap-2 items-center">
-        <div className="flex items-center gap-3 font-medium leading-none">
-          وضعیت پرداخت های اخیر محصولات{" "}
+        <p className="flex items-center gap-3 font-medium text-sm leading-none">
+          وضعیت پرداخت های اخیر محصولات
           <TrendingUp className="h-4 w-4 text-green-500" />
-        </div>
-        <div className="leading-none text-muted-foreground text-center text-xs">
+        </p>
+        <div className="leading-none md:block hidden text-muted-foreground text-center text-xs">
           بررسی اجمالی و تعداد پرداخت های اخیر موفق و ناموفق و لغو شده
         </div>
       </div>

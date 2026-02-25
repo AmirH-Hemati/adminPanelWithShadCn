@@ -23,17 +23,19 @@ export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-end px-2 my-4">
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+    <div className="my-4 px-2">
+      <div className="flex items-start gap-2 md:items-center w-full flex-col md:flex-row  md:justify-between justify-end">
+        <div className="flex items-center gap-2">
+          <p className="text-xs md:text-sm font-medium">
+            تعداد سطر ها در هر صفحه
+          </p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value));
             }}
           >
-            <SelectTrigger className="h-8 w-[70px]">
+            <SelectTrigger>
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
@@ -45,51 +47,34 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="hidden size-8 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight />
-          </Button>
+        <div className="flex  items-center justify-center text-sm font-medium">
+          <p>
+            صفحه {table.getState().pagination.pageIndex + 1} از
+            {table.getPageCount()}
+          </p>
+
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">رفتن به صفحه قبلی</span>
+              <ChevronLeft />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="size-8"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">رفتن به صفحه بعدی </span>
+              <ChevronRight />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

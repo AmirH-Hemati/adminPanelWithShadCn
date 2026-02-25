@@ -1,30 +1,26 @@
 "use client";
-import AddUserForm from "@/features/users/components/AddUserForm";
+import { useLogout } from "@/features/authentication/hooks/useLogout";
 import {
+  ChartBarStacked,
   ChevronUp,
+  ClockArrowDown,
   LayoutDashboardIcon,
   LogOut,
-  Plus,
-  Settings,
+  MessageCircle,
+  SaudiRiyal,
   Shirt,
   ShoppingBag,
   User,
   User2,
   Users,
-  ClockArrowDown,
-  SaudiRiyal,
-  MessageCircle,
-  ChartBarStacked,
 } from "lucide-react";
 import Link from "next/link";
-import AddProductForm from "../features/products/components/AddProductForm";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Sheet, SheetTrigger } from "./ui/sheet";
 import {
   Sidebar,
   SidebarContent,
@@ -36,8 +32,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
+  useSidebar,
 } from "./ui/sidebar";
-import { useLogout } from "@/features/authentication/hooks/useLogout";
+import { usePathname } from "next/navigation";
 
 const sidebarData = [
   { label: "داشبورد", icon: LayoutDashboardIcon, href: "/" },
@@ -50,8 +47,13 @@ const sidebarData = [
 ];
 
 export default function AppSidebar() {
+  const { openMobile, setOpenMobile } = useSidebar();
   const { logout, isPending } = useLogout();
+  const pathName = usePathname();
 
+  function handelClick() {
+    if (openMobile) setOpenMobile(false);
+  }
   function handelLogout() {
     logout();
   }
@@ -59,10 +61,10 @@ export default function AppSidebar() {
     <Sidebar collapsible="icon" side="right">
       {/* sidebar header  */}
 
-      <SidebarHeader className="py-4 ">
+      <SidebarHeader className="h-20 py-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild className="h-full">
               <Link href="/">
                 <ShoppingBag />
                 <span className="text-xl font-bold ">تکنـــــــو شاپ </span>
@@ -81,9 +83,20 @@ export default function AppSidebar() {
           <SidebarGroup key={index}>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link href={data.href}>
+                <SidebarMenuItem className="h-10">
+                  <SidebarMenuButton
+                    onClick={handelClick}
+                    asChild
+                    className={`
+                   
+                        ${
+                          pathName === data.href
+                            ? "bg-muted/50"
+                            : "bg-transparent h-full"
+                        }
+                      `}
+                  >
+                    <Link href={data.href} className="h-full">
                       <data.icon />
                       {data.label}
                     </Link>
@@ -109,18 +122,16 @@ export default function AppSidebar() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
                   <User />
-                  Account
+                  پروفایل
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings /> Setting
-                </DropdownMenuItem>
+
                 <DropdownMenuItem
                   variant="destructive"
                   disabled={isPending}
                   onClick={handelLogout}
                 >
                   <LogOut />
-                  Sign out
+                  خروج از حساب کاربری
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

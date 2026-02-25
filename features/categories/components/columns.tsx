@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import CreateCategoryForm from "./CreateCategoryForm";
 
 // : ColumnDef<ProductClient>[]
@@ -32,9 +25,7 @@ export const columns = (deleteCategory: (id: string) => void) => {
         return (
           <div className="w-12 h-12 relative">
             <Image
-              src={`http://localhost:3000/img/categories/${
-                category?.image as string
-              }`}
+              src={category?.image}
               alt={category.label}
               fill
               unoptimized
@@ -55,6 +46,10 @@ export const columns = (deleteCategory: (id: string) => void) => {
     {
       accessorKey: "createdAt",
       header: "زمان ایجاد",
+      cell: ({ row }) => {
+        const date = new Date(row.original.createdAt).toLocaleString("fa-IR");
+        return <p>{date}</p>;
+      },
     },
     {
       id: "actions",

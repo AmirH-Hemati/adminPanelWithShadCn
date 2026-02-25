@@ -14,17 +14,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-export const columns: ColumnDef<RegisterFull>[] = [
+// : ColumnDef<RegisterFull>[]
+export const columns = [
   {
     accessorKey: "photo",
     header: "آواتار",
     cell: ({ row }) => {
       const user = row.original;
+      console.log(user);
       return (
         <div className="w-9 h-9 relative">
           <Image
-            src={`http://localhost:3000/img/users/${user.photo}`}
+            src={user.photo}
             alt={user.name}
             fill
             unoptimized
@@ -79,13 +80,11 @@ export const columns: ColumnDef<RegisterFull>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem variant="destructive">
-              Delete User
-            </DropdownMenuItem>
+            <DropdownMenuLabel>فعالیت ها</DropdownMenuLabel>
+            <DropdownMenuItem variant="destructive">حذف کاربر</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link href={`/users/${user._id}`}>View User</Link>
+              <Link href={`/users/${user._id}`}>مشاهده کاربر</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -30,7 +30,6 @@ function Editor({ form }) {
           await axiosInstance.delete(`/uploads/froala/`, {
             data: { url: imagePath },
           });
-          console.log("تصویر با موفقیت حذف شد");
         } catch (error) {
           console.log(error);
         }
@@ -53,7 +52,7 @@ function Editor({ form }) {
                 config={config}
               />
             </FormControl>
-            <FormDescription>
+            <FormDescription className="text-xs">
               میتوانید برای توضیحات خود عکس ایموجی , ایکون , تغییر سایز و رنگ
               انجام دهید
             </FormDescription>

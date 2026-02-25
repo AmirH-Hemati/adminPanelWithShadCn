@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/chart";
 import { useGetMonthlySales } from "@/features/payments/hooks/useGetMonthlySales";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import AppAreaChartSkeleton from "./AppAreaChartSkeleton";
 
 const chartConfig = {
   totalAmountSales: {
@@ -24,12 +25,15 @@ const chartConfig = {
 
 const AppAreaChart = () => {
   const { sales, isLoading } = useGetMonthlySales();
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <AppAreaChartSkeleton />;
 
   return (
-    <div className="">
+    <div className="overflow-x-auto">
       <h1 className="text-lg font-medium mb-6">نمودار فروش ماهانه </h1>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <ChartContainer
+        config={chartConfig}
+        className="min-h-[200px] overflow-x-auto"
+      >
         <AreaChart data={sales}>
           <CartesianGrid />
 

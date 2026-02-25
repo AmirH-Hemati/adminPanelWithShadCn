@@ -31,7 +31,7 @@ export default function Navbar() {
       <div className="flex items-center gap-2 md:gap-4">
         {/* navigate */}
 
-        <Link href="/">Dashboard</Link>
+        <Link href="/">داشبورد</Link>
 
         {/* theme */}
 
@@ -45,13 +45,13 @@ export default function Navbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setTheme("light")}>
-              Light
+              روشن
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("dark")}>
-              Dark
+              تاریک
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
+              سیستم
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -65,23 +65,20 @@ export default function Navbar() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={10}>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>حساب من </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <User className="w-5 h-5 mr-2" />
-              Profile
+              پروفایل
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings className="w-5 h-5 mr-2" />
-              Settings
-            </DropdownMenuItem>
+
             <DropdownMenuItem
               variant="destructive"
               disabled={isPending}
               onClick={handelLogout}
             >
               <LogOut className="w-5 h-5 mr-2" />
-              Logout
+              خروج از حساب کاربری
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

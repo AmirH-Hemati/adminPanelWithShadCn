@@ -38,6 +38,7 @@ function AddFeatures({ form }) {
       <Button
         variant="outline"
         size="sm"
+        type="button"
         onClick={() => append({ key: "", value: "" })}
       >
         اضافه کردن ویژگی های محصول

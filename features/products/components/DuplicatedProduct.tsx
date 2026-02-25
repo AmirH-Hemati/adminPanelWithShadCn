@@ -13,6 +13,7 @@ export default function DuplicatedProduct({
       name: `کپی از  ${product.name}`,
       category: product.category,
       price: product.price,
+      priceDiscount: product.priceDiscount,
       brand: product.brand,
       colors: product.colors,
       sizes: product.sizes,

@@ -1,13 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import CreateProductForm from "./CreateProductForm";
 
 export default function AddNewProductDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mr-auto my-5">افزودن محصول جدید</Button>
+        <Button variant={`default`} size="sm" className="text-xs">
+          افزودن محصول جدید
+        </Button>
       </DialogTrigger>
 
       <DialogContent

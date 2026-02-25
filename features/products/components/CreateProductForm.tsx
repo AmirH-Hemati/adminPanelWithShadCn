@@ -146,14 +146,14 @@ function CreateProductForm({ product = {} }) {
         formData.append("imageCover", data.imageCover);
       } else if (key === "colors") {
         data.colors.forEach((color: string) =>
-          formData.append("colors", color)
+          formData.append("colors", color),
         );
       } else if (key === "features") {
         data.features.forEach(
           (feature: { key: string; value: string }, index: number) => {
             formData.append(`features[${index}][key]`, feature.key);
             formData.append(`features[${index}][value]`, feature.value);
-          }
+          },
         );
       } else {
         formData.append(key, data[key]);
@@ -177,30 +177,33 @@ function CreateProductForm({ product = {} }) {
         <FormField
           control={form.control}
           name="name"
+          disabled={isWorking}
           render={({ field }) => (
             <FormItem className="my-5">
               <FormLabel>نام محصول </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs">
                 نام نمایش دهنده محصول در وبسایت و موتور های جستجوگر
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="grid grid-cols-2 gap-2">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 gap-4">
           <FormField
             control={form.control}
             name="price"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem className="my-5">
                 <FormLabel>قیمت محصول </FormLabel>
                 <FormControl>
                   <Input {...field} type="number" />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   قیمت محصول را به تومان وارد کنید
                 </FormDescription>
                 <FormMessage />
@@ -210,13 +213,14 @@ function CreateProductForm({ product = {} }) {
           <FormField
             control={form.control}
             name="priceDiscount"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem className="my-5 ">
                 <FormLabel>تخفیف محصول </FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" />
+                  <Input {...field} type="number" defaultValue={0} />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   تخفیف محصول را به تومان وارد کنید
                 </FormDescription>
                 <FormMessage />
@@ -224,10 +228,11 @@ function CreateProductForm({ product = {} }) {
             )}
           />
         </div>
-        <div className="grid grid-cols-2 gap-2 my-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 mt-5 gap-4">
           <FormField
             control={form.control}
             name="category"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>دسته بندی</FormLabel>
@@ -245,7 +250,7 @@ function CreateProductForm({ product = {} }) {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   دسته بندی محصول را انتخاب کنید.
                 </FormDescription>
                 <FormMessage />
@@ -256,6 +261,7 @@ function CreateProductForm({ product = {} }) {
           <FormField
             control={form.control}
             name="brand"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>برند محصول</FormLabel>
@@ -273,19 +279,22 @@ function CreateProductForm({ product = {} }) {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormDescription>برند محصول را انتخاب کنید. </FormDescription>
+                <FormDescription className="text-xs">
+                  برند محصول را انتخاب کنید.{" "}
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="grid grid-cols-2 gap-2 my-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 mt-5 gap-4">
           <FormField
             control={form.control}
             name="imageCover"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>عکس کاور محصول </FormLabel>
+                <FormLabel>عکس کاور محصول</FormLabel>
                 <FormControl>
                   <Input
                     type="file"
@@ -293,7 +302,7 @@ function CreateProductForm({ product = {} }) {
                     accept="image/*"
                   />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   فقط یک عکس به عنوان کاور محصول میتوانید انتخاب کنید
                 </FormDescription>
                 <FormMessage />
@@ -304,13 +313,14 @@ function CreateProductForm({ product = {} }) {
           <FormField
             control={form.control}
             name="images"
+            disabled={isWorking}
             render={({ field }) => (
               <FormItem>
                 <FormLabel> گالری تصاویر محصول </FormLabel>
                 <FormControl>
                   <Input {...field} type="file" multiple accept="image/*" />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-xs">
                   میتوانید حداقل 1 و حداکثر 3 عکس انتخاب کنید
                 </FormDescription>
                 <FormMessage />
@@ -322,6 +332,7 @@ function CreateProductForm({ product = {} }) {
         <FormField
           control={form.control}
           name="colors"
+          disabled={isWorking}
           render={({ field }) => (
             <FormItem className="my-5">
               <FormLabel>رنگ های محصول</FormLabel>
@@ -338,7 +349,7 @@ function CreateProductForm({ product = {} }) {
                             field.onChange([...currentValues, color.value]);
                           } else {
                             field.onChange(
-                              currentValues?.filter((c) => c !== color?.value)
+                              currentValues?.filter((c) => c !== color?.value),
                             );
                           }
                         }}
@@ -364,12 +375,15 @@ function CreateProductForm({ product = {} }) {
         />
 
         <Editor form={form} />
-        <AddFeatures name="features" form={form} />
+        <AddFeatures form={form} />
+
         <DialogFooter className="mt-6">
           <Button variant="ghost" type="reset">
             لغو
           </Button>
-          <Button type="submit">اضافه کردن</Button>
+          <Button type="submit">
+            {isEditSessions ? "ثبت ویرایش" : "اضافه کردن"}
+          </Button>
         </DialogFooter>
       </form>
     </Form>

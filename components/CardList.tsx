@@ -27,20 +27,19 @@ const CardList = ({
               key={product._id}
               className="flex-row-reverse  items-center justify-between gap-4 p-2"
             >
-              <div className="w-12 h-12 rounded-sm relative overflow-hidden">
-                <Image
-                  src={`http://localhost:3000/img/products/${product.imageCover}`}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <CardContent className="flex-1 p-0">
-                <CardTitle className="text-xs font-medium text-right">
-                  {product.name}
-                </CardTitle>
+              <CardContent className="p-0 flex items-center gap-1">
+                <p className="text-xs font-medium text-right">{product.name}</p>
+
+                <div className="w-20 h-10 md:w-12 md:h-12 rounded-sm relative overflow-hidden">
+                  <Image
+                    src={`http://localhost:3000/img/products/${product.imageCover}`}
+                    alt={product.name}
+                    fill
+                    className="object-cover w-full h-full"
+                  />
+                </div>
               </CardContent>
-              <CardFooter className="p-0   text-xs text-primary">
+              <CardFooter className="p-0  text-xs text-primary">
                 {formatToman(product.price)}
               </CardFooter>
             </Card>

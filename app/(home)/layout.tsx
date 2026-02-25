@@ -11,9 +11,9 @@ export default function RootLayout({
     <SidebarProvider>
       <AppSidebar />
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-hidden">
         <Navbar />
-        <div className="px-4">{children}</div>
+        <div className="px-4 max-w-5xl mx-auto">{children}</div>
       </main>
     </SidebarProvider>
   );
