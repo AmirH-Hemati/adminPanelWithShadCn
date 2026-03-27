@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Trash } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 
-function AddFeatures({ form }) {
+function AddFeatures({ form } ) {
   const { append, fields, remove } = useFieldArray({
     control: form.control,
     name: "features",
@@ -11,14 +11,14 @@ function AddFeatures({ form }) {
 
   return (
     <div className="space-y-4 mt-5">
-      {fields.map((field, index) => (
+      {fields.map((_, index) => (
         <div
           key={index}
           className="flex flex-col items-center gap-5 lg:flex-row lg:items-center"
         >
           <Input
             placeholder="نام ویژگی"
-            {...form.register(`features.${index}.key`)}
+            {...form.register(`features.${index}.label`)}
           />
 
           <Input
@@ -39,7 +39,7 @@ function AddFeatures({ form }) {
         variant="outline"
         size="sm"
         type="button"
-        onClick={() => append({ key: "", value: "" })}
+        onClick={() => append({ label: "", value: "" })}
       >
         اضافه کردن ویژگی های محصول
       </Button>

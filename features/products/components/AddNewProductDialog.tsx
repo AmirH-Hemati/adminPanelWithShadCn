@@ -20,6 +20,7 @@ export default function AddNewProductDialog() {
       <DialogContent
         className="max-w-4xl! w-full max-h-[80vh] overflow-y-auto rounded-2xl p-6"
         dir="rtl"
+        style={{ scrollbarWidth: "thin" }}
       >
         <CreateProductForm />
       </DialogContent>

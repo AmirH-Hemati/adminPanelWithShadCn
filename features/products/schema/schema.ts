@@ -1,50 +1,56 @@
 import { z } from "zod";
 
-export const baseProductSchema = z.object({
-  name: z.string().min(1, { message: "Product name is required!" }),
-  shortDescription: z
+export const productSchema = z.object({
+  name: z
     .string()
-    .min(1, { message: "Short description is required!" })
-    .max(60),
-  description: z.string().min(1, { message: "Description is required!" }),
-  price: z.number().min(1, { message: "Price is required!" }),
-  category: z.string().min(1, { message: "Category is required!" }),
-  sizes: z.array(z.string()).min(1, { message: "Sizes is required!" }),
-  colors: z.array(z.string()).min(1, { message: "Colors is required!" }),
-  images: z
-    .array(z.record(z.string(), z.string()))
-    .min(1, { message: "images is required!" }),
-});
+    .nonempty("نام محصول نمیتواند خالی باشد")
+    .min(3, "نام محصول حداقل باید ۳ کاراکتر باشد"),
 
-export const productSchemaClient = baseProductSchema.extend({
-  _id: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
+  price: z.coerce
+    .number("قیمت باید عدد باشد")
+    .min(1, "قیمت باید بیشتر از صفر باشد"),
 
-export type ProductBase = z.infer<typeof baseProductSchema>;
-export type ProductClient = z.infer<typeof productSchemaClient>;
+  priceDiscount: z.coerce
+    .number("قیمت باید عدد باشد")
+    .optional(),
+    // .refine((val, ctx) => {
+    //   if (!val) return true;
+    //   return val < ctx.parent.price;
+    // }, "تخفیف باید کمتر از قیمت باشد"),
 
-export type ProductsList = z.infer<typeof productSchemaClient>[];
+  category: z.string().nonempty("انتخاب دسته بندی الزامی است"),
 
-export type CartItemTypes = ProductClient & {
-  qty: number;
-  selectedColor: string;
-  selectedSize: string;
-};
+  brand: z.string().nonempty("انتخاب برند الزامی است"),
 
-export type CartItemsTypes = CartItemTypes[];
-
-export const addressSchema = z.object({
-  name: z.string().min(1, "Name is required!"),
-  email: z.email().min(1, "Email is required!"),
-  phone: z
+  description: z
     .string()
-    .min(7, "Phone number must be between 7 and 10 digits!")
-    .max(11, "Phone number must be between 7 and 10 digits!")
-    .regex(/^\d+$/, "Phone number must contain only numbers!"),
-  address: z.string().min(1, "Address is required!"),
-  city: z.string().min(1, "City is required!"),
+    .nonempty("توضیحات محصول نمیتواند خالی باشد")
+    .min(10, "توضیحات حداقل باید ۱۰ کاراکتر باشد"),
+
+  imageCover: z
+    .any()
+    .refine((file) => file instanceof File, "تصویر کاور الزامی است"),
+
+  images: z.any(),
+
+  colors: z
+    .array(
+      z.object({
+        label: z.string().min(1, "عنوان الزامی است"),
+        value: z.string().min(1, "مقدار الزامی است"),
+        hex: z.string().min(1, "کد رنگی الزامی است"),
+      }),
+    )
+    .min(1, "حداقل یک رنگ انتخاب کنید"),
+
+  features: z
+    .array(
+      z.object({
+        label: z.string().min(1, "عنوان الزامی است"),
+        value: z.string().min(1, "مقدار الزامی است"),
+      }),
+    )
+    .optional(),
 });
 
-export type Address = z.infer<typeof addressSchema>;
+export type productSchemaType = z.infer<typeof productSchema>;

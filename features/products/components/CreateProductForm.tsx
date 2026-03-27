@@ -1,4 +1,3 @@
-import Spinner from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DialogFooter } from "@/components/ui/dialog";
@@ -28,6 +27,19 @@ import AddFeatures from "./AddFeature";
 import Editor from "./Editor";
 import { brands } from "../data/brands";
 import { colors } from "../data/colors";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { productSchema, productSchemaType } from "../schema/schema";
+import Spinner from "@/components/Spinner";
+
+function mapEditValues(values: any) {
+  return {
+    ...values,
+    category: values.category?._id || "",
+    brand: values.brand?.value || "",
+    colors: values.colors?.map((c: any) => c.value) || [],
+    images: values.images || [],
+  };
+}
 
 function CreateProductForm({ product = {} }) {
   const { createProduct, isCreating } = useCreateProduct();
@@ -39,8 +51,9 @@ function CreateProductForm({ product = {} }) {
   const isEditSessions = Boolean(editId);
 
   const form = useForm({
+    resolver: zodResolver(productSchema),
     defaultValues: isEditSessions
-      ? { ...editValues, category: editValues?.category?._id || "" }
+      ? mapEditValues(editValues)
       : {
           name: "",
           price: 0,
@@ -48,55 +61,42 @@ function CreateProductForm({ product = {} }) {
           category: "",
           brand: "",
           imageCover: "",
-          images: "",
+          images: [],
           colors: [],
           description: "",
+          features: [],
         },
   });
 
   useEffect(() => {
-    if (!isLoading && editId) {
+    if (!isLoading && isEditSessions) {
       form.reset({
         ...editValues,
         category: editValues?.category?._id || "",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [isLoading, isEditSessions]);
 
-  if (isLoading) return <Spinner />;
-
-  function onSubmit(data) {
+  function onSubmit(values: productSchemaType) {
     const formData = new FormData();
+    const selectedBrnad = brands.find((brand) => brand.value == values.brand);
 
-    for (const key in data) {
-      if (key === "imageCover") {
-        formData.append("imageCover", data.imageCover);
-      } else if (key === "colors") {
-        data.colors.forEach((color: string) =>
-          formData.append("colors", color),
-        );
-      } else if (key === "features") {
-        data.features.forEach(
-          (feature: { key: string; value: string }, index: number) => {
-            formData.append(`features[${index}][key]`, feature.key);
-            formData.append(`features[${index}][value]`, feature.value);
-          },
-        );
+    const updatedValue = { ...values, brand: selectedBrnad };
+    for (const key in updatedValue) {
+      const value = updatedValue[key as keyof productSchemaType];
+      if (value instanceof FileList) {
+        for (const file of value) {
+          formData.append(key, file);
+        }
+      } else if (value instanceof File) {
+        formData.append(key, value);
+      } else if (typeof value === "object" && value !== null) {
+        formData.append(key, JSON.stringify(value));
       } else {
-        formData.append(key, data[key]);
+        formData.append(key, value);
       }
     }
-    if (isEditSessions) {
-      updateProduct({ newProduct: formData, id: editId });
-    } else {
-      createProduct(formData);
-    }
-
-    //  onSuccess: function () {
-    //         reset?.();
-    //         onCloseModal?.();
-    //       },
+    createProduct(formData);
   }
 
   return (
@@ -129,7 +129,11 @@ function CreateProductForm({ product = {} }) {
               <FormItem className="my-5">
                 <FormLabel>قیمت محصول </FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" />
+                  <Input
+                    {...field}
+                    type="number"
+                    value={field.value as number}
+                  />
                 </FormControl>
                 <FormDescription className="text-xs">
                   قیمت محصول را به تومان وارد کنید
@@ -146,7 +150,11 @@ function CreateProductForm({ product = {} }) {
               <FormItem className="my-5 ">
                 <FormLabel>تخفیف محصول </FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" defaultValue={0} />
+                  <Input
+                    {...field}
+                    type="number"
+                    value={field.value as number}
+                  />
                 </FormControl>
                 <FormDescription className="text-xs">
                   تخفیف محصول را به تومان وارد کنید
@@ -157,34 +165,38 @@ function CreateProductForm({ product = {} }) {
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2 mt-5 gap-4">
-          <FormField
-            control={form.control}
-            name="category"
-            disabled={isWorking}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>دسته بندی</FormLabel>
-                <FormControl>
-                  <Select {...field} onValueChange={(e) => field.onChange(e)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="دسته بندی محصول" />
-                    </SelectTrigger>
-                    <SelectContent className="w-full">
-                      {categories.map((category) => (
-                        <SelectItem key={category._id} value={category._id}>
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormDescription className="text-xs">
-                  دسته بندی محصول را انتخاب کنید.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <FormField
+              control={form.control}
+              name="category"
+              disabled={isWorking}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>دسته بندی</FormLabel>
+                  <FormControl>
+                    <Select {...field} onValueChange={(e) => field.onChange(e)}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="دسته بندی محصول" />
+                      </SelectTrigger>
+                      <SelectContent className="w-full">
+                        {categories.map((category) => (
+                          <SelectItem key={category._id} value={category._id}>
+                            {category.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    دسته بندی محصول را انتخاب کنید.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <FormField
             control={form.control}
@@ -208,7 +220,7 @@ function CreateProductForm({ product = {} }) {
                   </Select>
                 </FormControl>
                 <FormDescription className="text-xs">
-                  برند محصول را انتخاب کنید.{" "}
+                  برند محصول را انتخاب کنید.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -246,7 +258,12 @@ function CreateProductForm({ product = {} }) {
               <FormItem>
                 <FormLabel> گالری تصاویر محصول </FormLabel>
                 <FormControl>
-                  <Input {...field} type="file" multiple accept="image/*" />
+                  <Input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => field.onChange(e.target.files)}
+                  />
                 </FormControl>
                 <FormDescription className="text-xs">
                   میتوانید حداقل 1 و حداکثر 3 عکس انتخاب کنید
@@ -269,15 +286,19 @@ function CreateProductForm({ product = {} }) {
                   {colors.map((color) => (
                     <div className="flex items-center gap-2" key={color?.value}>
                       <Checkbox
-                        id={color?.value}
-                        checked={field?.value?.includes(color?.value)}
+                        id={color.value}
+                        checked={field?.value?.some(
+                          (c) => c.value == color?.value,
+                        )}
                         onCheckedChange={(checked) => {
                           const currentValues = field.value || [];
                           if (checked) {
-                            field.onChange([...currentValues, color.value]);
+                            field.onChange([...currentValues, color]);
                           } else {
                             field.onChange(
-                              currentValues?.filter((c) => c !== color?.value),
+                              currentValues?.filter(
+                                (c) => c.value !== color?.value,
+                              ),
                             );
                           }
                         }}
@@ -319,3 +340,14 @@ function CreateProductForm({ product = {} }) {
 }
 
 export default CreateProductForm;
+
+// if (isEditSessions) {
+//   updateProduct({ newProduct: formData, id: editId });
+// } else {
+//   createProduct(formData);
+// }
+
+//  onSuccess: function () {
+//         reset?.();
+//         onCloseModal?.();
+//       },
