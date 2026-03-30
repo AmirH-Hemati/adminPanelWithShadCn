@@ -36,7 +36,7 @@ function mapEditValues(values: any) {
     ...values,
     category: values.category?._id || "",
     brand: values.brand?.value || "",
-    colors: values.colors?.map((c: any) => c.value) || [],
+    colors:  [],
     images: values.images || [],
   };
 }
@@ -256,7 +256,7 @@ function CreateProductForm({ product = {} }) {
             disabled={isWorking}
             render={({ field }) => (
               <FormItem>
-                <FormLabel> گالری تصاویر محصول </FormLabel>
+                <FormLabel>گالری تصاویر محصول </FormLabel>
                 <FormControl>
                   <Input
                     type="file"

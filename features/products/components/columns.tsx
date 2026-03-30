@@ -77,7 +77,7 @@ export const columns = (
         return (
           <div className="flex flex-col gap-1 font-medium text-xs">
             <span>{product.category.label}</span>
-            <span className="text-gray-400 ">{product.brand}</span>
+            <span className="text-gray-400 ">{product.brand.label}</span>
           </div>
         );
       },
