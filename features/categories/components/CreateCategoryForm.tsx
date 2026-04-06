@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useCreateCategory } from "../hooks/useCreateCategory";
 import { useUpdateCategory } from "../hooks/useUpdateCategory";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { categorySchema } from "../schema/category.schema";
 
 function CreateCategoryForm({ category = {} }) {
   const { createCategory, isCreateing } = useCreateCategory();
@@ -23,7 +25,10 @@ function CreateCategoryForm({ category = {} }) {
   const isEditSession = Boolean(editId);
 
   const form = useForm({
-    defaultValues: isEditSession ? { ...editValues } : { label: "", image: "" },
+    resolver: zodResolver(categorySchema),
+    defaultValues: isEditSession
+      ? { ...editValues, mode: "edit" }
+      : { label: "", image: "", mode: "create" },
   });
 
   function onSubmit(data) {
@@ -85,6 +90,7 @@ function CreateCategoryForm({ category = {} }) {
             </FormItem>
           )}
         />
+
         <DialogFooter className="mt-6">
           <Button variant="ghost" type="reset">
             لغو
