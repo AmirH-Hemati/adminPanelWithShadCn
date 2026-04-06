@@ -36,7 +36,7 @@ function mapEditValues(values: any) {
     ...values,
     category: values.category?._id || "",
     brand: values.brand?.value || "",
-    colors:  [],
+    colors: [],
     images: values.images || [],
   };
 }
@@ -53,7 +53,7 @@ function CreateProductForm({ product = {} }) {
   const form = useForm({
     resolver: zodResolver(productSchema),
     defaultValues: isEditSessions
-      ? mapEditValues(editValues)
+      ? { ...mapEditValues(editValues), mode: "edit" }
       : {
           name: "",
           price: 0,
@@ -65,6 +65,7 @@ function CreateProductForm({ product = {} }) {
           colors: [],
           description: "",
           features: [],
+          mode: "create",
         },
   });
 
@@ -72,6 +73,7 @@ function CreateProductForm({ product = {} }) {
     if (!isLoading && isEditSessions) {
       form.reset({
         ...editValues,
+        brand: editValues?.brand?.value || "",
         category: editValues?.category?._id || "",
       });
     }
