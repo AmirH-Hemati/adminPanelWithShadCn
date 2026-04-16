@@ -21,6 +21,7 @@ export default function DuplicatedProduct({
       description: product.description,
       imageCover: product.imageCover,
       images: product.images,
+      features: product.features,
     });
   }
 

@@ -1,7 +1,7 @@
 import ProductsSkeleton from "@/components/ProductsSkeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { formatToman } from "@/utils/helper";
+import { formatDate, formatToman } from "@/utils/helper";
 import Image from "next/image";
 import { useLatestProducts } from "../hooks/useLatestProducts";
 export default function LatestProductList() {
@@ -28,12 +28,23 @@ export default function LatestProductList() {
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <p className="text-xs mr-2 flex-1 font-medium text-right">
-                  {product.name}
-                </p>
-                <p className="p-0  text-xs text-primary">
-                  {formatToman(product.price)}
-                </p>
+                <div className="text-xs  flex-1 mr-1">
+                  <p className="text-sm font-semibold ">{product.name}</p>
+                  <div>
+                    <span>برند : </span>
+                    <span>{product.brand.label}</span>
+                  </div>
+                  <div>
+                    <span>دسته بندی : </span>
+                    <span>{product.category.label}</span>
+                  </div>
+                </div>
+                <div className=" text-xs text-primary space-y-1">
+                  <p>{formatToman(product.price)}</p>
+                  <p>
+                    {new Date(product.createdAt).toLocaleDateString("fa-IR")}
+                  </p>
+                </div>
               </CardContent>
             </Card>
           ))}

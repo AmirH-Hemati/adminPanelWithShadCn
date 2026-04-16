@@ -28,7 +28,10 @@ const CardList = ({
               className="flex-row-reverse  items-center justify-between gap-4 p-2"
             >
               <CardContent className="p-0 flex items-center gap-1">
-                <p className="text-xs font-medium text-right">{product.name}</p>
+                  <p className="text-xs font-medium text-right">
+                    {product.name}
+                  </p>
+              
 
                 <div className="w-20 h-10 md:w-12 md:h-12 rounded-sm relative overflow-hidden">
                   <Image

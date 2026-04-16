@@ -14,11 +14,7 @@ export default function PopulateProductList() {
         {products &&
           products?.length > 0 &&
           products.map((product) => (
-            <Card
-              dir="rtl"
-              key={product._id}
-              className="flex-row-reverse  items-center justify-between gap-4 p-2"
-            >
+            <Card dir="rtl" key={product._id} className="  p-2">
               <CardContent className="p-0 w-full flex items-center justify-between gap-1">
                 <div className="w-20 h-10 md:w-12 md:h-12 rounded-sm relative overflow-hidden">
                   <Image
@@ -29,9 +25,17 @@ export default function PopulateProductList() {
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <p className="text-xs mr-2 flex-1 font-medium text-right">
-                  {product.name}
-                </p>
+                <div className="text-xs  flex-1 mr-1">
+                  <p className="text-sm font-semibold ">{product.name}</p>
+                  <div>
+                    <span>برند : </span>
+                    <span>{product.brand.label}</span>
+                  </div>
+                  <div>
+                    <span>دسته بندی : </span>
+                    <span>{product.category.label}</span>
+                  </div>
+                </div>
                 <p className="p-0  text-xs text-primary">
                   {formatToman(product.price)}
                 </p>
