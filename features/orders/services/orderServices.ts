@@ -21,7 +21,6 @@ export async function deleteOrder(id: string): Promise<object> {
 
 export async function getRecentOrder(userId: string): Promise<Orders> {
   const { data } = await axiosInstance.get(`/orders/recentOrder/${userId}`);
-
   return data.data;
 }
 

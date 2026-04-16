@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
-import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
+import { Badge } from "./ui/badge";
 import { ProductsList, Orders } from "@repo/validation";
 import Image from "next/image";
 import Link from "next/link";
