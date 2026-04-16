@@ -12,24 +12,29 @@ export default function OrderDataBox({ order }) {
       </CardHeader>
 
       <CardContent className="flex-1 px-3 space-y-6 ">
-        <CardTitle className="text-sm font-medium">
+        <CardTitle className="text-sm ">
           <div>
-            <span> سفارش دهنده : </span>
-            <span>{order?.user?.name}</span>
+            <span className="font-semibold"> سفارش دهنده : </span>
+            <span className="font-normal">{order?.user?.name}</span>
           </div>
           <div>
-            <span> شماره موبایل : </span>
-            <span>{order?.user?.phone}</span>
+            <span className="font-semibold"> شماره موبایل : </span>
+            <span className="font-normal">{order?.user?.phone}</span>
           </div>
         </CardTitle>
-        <div className="flex gap-2 items-center justify-between font-medium text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <h3>جزئیات آدرس : </h3>
-            <span>{order?.address?.city} ,</span>
-            <span>{order?.address?.addressLine}</span>
-            <span>{order?.address?.postalCode}</span>
+        <div className="flex gap-2 items-center justify-between  text-sm ">
+          <div className="flex  flex-col gap-2">
+            <h3 className="font-bold text-sm ">جزئیات آدرس </h3>
+            <div className="flex ">
+              <span className="font-semibold">آدرس : </span>
+              <span>{order?.address?.city}</span>,
+              <span>{order?.address?.fullAddress}</span>
+            </div>
+            <div className="flex ">
+              <span className="font-semibold">کد پستی : </span>
+              <span>{order?.address?.postalCode}</span>
+            </div>
           </div>
-          <span>شماره موبایل : {order?.user?.phone}</span>
         </div>
 
         <div className=" mt-4">
@@ -48,7 +53,17 @@ export default function OrderDataBox({ order }) {
                     unoptimized
                   />
                 </div>
-                <span className="font-medium text-sm">{item.product.name}</span>
+                <div>
+                  <p className="font-medium text-sm">{item.product.name}</p>
+                  <div className=" text-xs flex gap-1 items-center">
+                    <span>رنگ : </span>
+                    <span>{item?.color?.label}</span>
+                  </div>
+                  <div className=" text-xs flex gap-1 items-center">
+                    <span>برند : </span>
+                    <span>{item?.product.brand?.label}</span>
+                  </div>
+                </div>
               </div>
               <div className="flex gap-2 text-xs  font-medium">
                 <span className="text-muted-foreground">
@@ -60,9 +75,9 @@ export default function OrderDataBox({ order }) {
         </div>
 
         <div className="bg-green-300 p-2 my-5">
-          <span className="text-green-800 font-semibold ">
+          <p className="text-green-800 font-medium ">
             مبلغ کل سفارش : {formatToman(order.totalAmount)}
-          </span>
+          </p>
         </div>
       </CardContent>
     </Card>

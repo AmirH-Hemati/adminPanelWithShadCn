@@ -14,6 +14,7 @@ import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useLogout } from "@/features/authentication/hooks/useLogout";
+
 export default function Navbar() {
   const { setTheme } = useTheme();
   const { logout, isPending } = useLogout();
