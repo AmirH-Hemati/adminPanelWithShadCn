@@ -18,10 +18,11 @@ import AddUserForm from "@/features/users/components/AddUserForm";
 import { useGetUser } from "@/features/users/hooks/useGetUser";
 import { useRecentOrder } from "@/features/orders/hooks/useRecentOrder";
 import Spinner from "@/components/Spinner";
+import { formatDate } from "@/utils/helper";
+import RecentOrder from "@/features/orders/components/RecentOrder";
 
 export default function Page() {
   const { user, isLoading } = useGetUser();
-  // const { orders, isLoading: isLoading2 } = useRecentOrder();
   if (isLoading) return <Spinner />;
 
   return (
@@ -56,24 +57,26 @@ export default function Page() {
                 <AddUserForm user={user} />
               </Sheet>
             </div>
-            <div className="space-y-4 mt-4">
-              <div className="flex items-center gap-2 mb-8">
+            <div className="space-y-4 mt-2">
+              <div className="flex items-center gap-2 ">
                 <Avatar className="size-12">
                   <AvatarImage alt="avatar user image" src={user.photo} />
                   <AvatarFallback>{user.name}</AvatarFallback>
                 </Avatar>
-                <div className="flex items-center gap-2">
-                  <span>{user.name}</span>
-                </div>
+                <span>{user.name}</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="font-bold">ایمیل :</span>
-                <span>{user.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <span className="font-bold">شماره موبایل :</span>
                 <span>{user.phone}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold"> کد ملی :</span>
+                <span>{user.nationalId}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold">ایمیل :</span>
+                <span>{user.email}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -82,14 +85,14 @@ export default function Page() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mt-4">
-              تاریخ عضویت : {new Date(user.createdAt).toLocaleString("en-US")}
+              تاریخ عضویت : {formatDate(user.createdAt)}
             </p>
           </div>
 
           {/* CARD LIST CONTAINER */}
 
           <div className="bg-primary-foreground p-4 rounded-lg">
-            {/* <CardList title="Recent Orders" orders={orders} /> */}
+            <RecentOrder />
           </div>
         </div>
 

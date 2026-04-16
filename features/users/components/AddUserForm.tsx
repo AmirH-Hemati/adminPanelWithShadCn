@@ -30,12 +30,8 @@ import {
 } from "@/components/ui/select";
 import { useCreateUser } from "../hooks/useCreateUser";
 import { useUpdateUser } from "../hooks/useUpdateUser";
-// import { registerFullSchema, RegisterFull } from "@repo/validation";
-// : { user?: RegisterFull }
-{
-  /* <RegisterFull></RegisterFull> */
-}
-// : RegisterFull
+import userSchema from "../schema/user.schema";
+
 export default function AddUserForm({ user }) {
   const { createUser, isCreating } = useCreateUser();
   const { updateUser, isUpdating } = useUpdateUser();
@@ -43,38 +39,36 @@ export default function AddUserForm({ user }) {
   const isEditSession = Boolean(user?._id);
   const isWorking = isCreating || isUpdating;
   const form = useForm({
-    // resolver: zodResolver(registerFullSchema),
+    resolver: zodResolver(userSchema),
 
     defaultValues: isEditSession
       ? user
       : {
           name: "",
           email: "",
-          role: "user",
-          password: "",
+          nationalId: "",
+          phone: "",
+          role: "",
         },
   });
 
   function submitUserForm(data) {
     if (isEditSession) {
-      updateUser(
-        { data, id: user?._id as string },
-        { onSuccess: () => form.reset() }
-      );
+      updateUser({ data, id: user?._id as string });
     } else {
-      createUser(data, { onSuccess: () => form.reset() });
+      createUser(data);
     }
   }
   return (
     <SheetContent>
       <ScrollArea className="h-screen">
         <SheetHeader>
-          <SheetTitle className="mb-4">Add User</SheetTitle>
+          <SheetTitle className="mb-4">ویرایش اطلاعات کاربر</SheetTitle>
         </SheetHeader>
         <SheetDescription asChild>
           <Form {...form}>
             <form
-              className="space-y-8 px-4"
+              className="space-y-8 px-4 grid"
               onSubmit={form.handleSubmit(submitUserForm)}
             >
               <FormField
@@ -82,27 +76,54 @@ export default function AddUserForm({ user }) {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>نام و نام خانوادگی</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>Enter user full name.</FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <FormField
                 control={form.control}
-                name="email"
+                name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>شماره موبایل</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Only admin can see your email.
-                    </FormDescription>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nationalId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>کد ملی کاربر</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>ایمیل کاربر</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -112,7 +133,7 @@ export default function AddUserForm({ user }) {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Role</FormLabel>
+                    <FormLabel>نقش کاربر</FormLabel>
                     <FormControl>
                       <Select
                         {...field}
@@ -127,35 +148,14 @@ export default function AddUserForm({ user }) {
                         </SelectContent>
                       </Select>
                     </FormControl>
-                    <FormDescription>
-                      Only admin can see your email.
-                    </FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {!user && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>password</FormLabel>
-                        <FormControl>
-                          <Input {...field} required />
-                        </FormControl>
-                        <FormDescription>
-                          Only admin can see your email.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </>
-              )}
-              <Button type="submit" disabled={isWorking}>
-                {isEditSession ? "Edit User" : "Create New User"}
+
+              <Button type="submit" disabled={isWorking} className="mr-auto">
+                {isEditSession ? "ویرایش کاربر" : "ایجاد کاربر جدید"}
               </Button>
             </form>
           </Form>
