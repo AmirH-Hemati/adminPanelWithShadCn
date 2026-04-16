@@ -59,10 +59,7 @@ export default function Page() {
             <div className="space-y-4 mt-4">
               <div className="flex items-center gap-2 mb-8">
                 <Avatar className="size-12">
-                  <AvatarImage
-                    alt="avatar user image"
-                    src={`http://localhost:3000/img/users/${user.photo}`}
-                  />
+                  <AvatarImage alt="avatar user image" src={user.photo} />
                   <AvatarFallback>{user.name}</AvatarFallback>
                 </Avatar>
                 <div className="flex items-center gap-2">
@@ -85,7 +82,7 @@ export default function Page() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mt-4">
-               تاریخ عضویت : {new Date(user.createdAt).toLocaleString("en-US")}
+              تاریخ عضویت : {new Date(user.createdAt).toLocaleString("en-US")}
             </p>
           </div>
 

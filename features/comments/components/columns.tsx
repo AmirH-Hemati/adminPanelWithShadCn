@@ -87,11 +87,11 @@ export const columns: ColumnDef<OrderClient>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href={`/users/${comment?.user?._id}`}>
-                مشاهده جزیات کاربر
+                مشاهده جزئیات کاربر
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="text-right">
-              <Link href={`/comments/${comment._id}`}> مشاهده جزیات کامنت</Link>
+              <Link href={`/comments/${comment._id}`}> مشاهده جزئیات کامنت</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

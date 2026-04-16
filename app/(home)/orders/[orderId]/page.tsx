@@ -42,7 +42,7 @@ export default function Page() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>جزیات سفارش</BreadcrumbPage>
+            <BreadcrumbPage>جزئیات سفارش</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

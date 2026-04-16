@@ -33,9 +33,9 @@ export default function CommentDataBox({ comment }) {
 
         <div className="flex items-center justify-between p-2  border-t">
           <div className="flex items-center gap-2">
-            <div className="border-2 w-12 h-12 relative rounded-md overflow-hidden">
+            <div className="border-2 w-16 h-16 relative rounded-md overflow-hidden">
               <Image
-                src={`http://localhost:3000/img/products/${comment.product.imageCover}`}
+                src={comment.product.imageCover}
                 alt={comment.product.name}
                 fill
                 className="object-cover "
@@ -50,7 +50,7 @@ export default function CommentDataBox({ comment }) {
         </div>
 
         <div className="space-y-2 my-4 border-t p-2 ">
-          <p className="font-medium text-md">جزیات کامنت : </p>
+          <p className="font-medium text-md">جزئیات کامنت : </p>
           <p className="pr-2 text-gray-400 font-semibold">{comment?.comment}</p>
         </div>
       </CardContent>

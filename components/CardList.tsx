@@ -66,7 +66,7 @@ const CardList = ({
                   href={`/orders/${item._id}`}
                   className="bg-foreground hover:bg-foreground/90 text-muted rounded-md text-xs px-2 py-1 font-medium"
                 >
-                  جزیات
+                  جزئیات
                 </Link>
               </CardFooter>
             </Card>

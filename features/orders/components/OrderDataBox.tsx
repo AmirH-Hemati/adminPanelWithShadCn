@@ -24,7 +24,7 @@ export default function OrderDataBox({ order }) {
         </CardTitle>
         <div className="flex gap-2 items-center justify-between font-medium text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <h3>جزیات آدرس : </h3>
+            <h3>جزئیات آدرس : </h3>
             <span>{order?.address?.city} ,</span>
             <span>{order?.address?.addressLine}</span>
             <span>{order?.address?.postalCode}</span>
@@ -41,7 +41,7 @@ export default function OrderDataBox({ order }) {
               <div className="flex items-center gap-2">
                 <div className="border-2 w-12 h-12 relative rounded-md overflow-hidden">
                   <Image
-                    src={`http://localhost:3000/img/products/${item.product.imageCover}`}
+                    src={item.product.imageCover}
                     alt={item.product.name}
                     fill
                     className="object-cover "

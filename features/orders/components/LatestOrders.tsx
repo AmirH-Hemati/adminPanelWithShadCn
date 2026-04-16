@@ -33,7 +33,7 @@ export default function LatestOrders() {
                 href={`/orders/${item._id}`}
                 className="bg-foreground hover:bg-foreground/90 text-muted rounded-sm text-xs px-4 py-1 font-medium"
               >
-                جزیات
+                جزئیات
               </Link>
             </Card>
           ))}
