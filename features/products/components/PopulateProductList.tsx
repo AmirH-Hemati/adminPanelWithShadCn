@@ -29,11 +29,11 @@ export default function PopulateProductList() {
                   <p className="text-sm font-semibold ">{product.name}</p>
                   <div>
                     <span>برند : </span>
-                    <span>{product.brand.label}</span>
+                    <span>{product?.brand?.label}</span>
                   </div>
                   <div>
                     <span>دسته بندی : </span>
-                    <span>{product.category.label}</span>
+                    <span>{product?.category?.label}</span>
                   </div>
                 </div>
                 <p className="p-0  text-xs text-primary">

@@ -56,13 +56,13 @@ export default function Page() {
             <Badge>{order?.status}</Badge>
           </div>
           <OrderDataBox order={order} />
-          <div className="mr-auto my-4 flex gap-2">
+          <div className="mr-auto my-4 flex flex-wrap   gap-2">
             <Button
               onClick={() => router.back()}
               variant="outline"
               className="cursor-pointer"
             >
-              برگشت به صفحه قبلی
+              برگشت
             </Button>
             <Button
               disabled={isDeleting}

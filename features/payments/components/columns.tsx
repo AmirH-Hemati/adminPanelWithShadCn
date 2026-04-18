@@ -52,9 +52,7 @@ export const columns = [
     accessorKey: "amount",
     header: () => <div className="text-right">مبلغ سفارش </div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-
-      const formatedAmount = formatToman(amount);
+      const formatedAmount = formatToman(row.original.totalAmount);
       return <div className="text-right font-medium">{formatedAmount}</div>;
     },
   },
@@ -70,10 +68,8 @@ export const columns = [
               paymentColors[payment?.status] || "bg-gray-100 text-gray-500"
             }`}
           >
-            {payment?.status === "success"
+            {payment?.status === "processing" || payment?.status === "success"
               ? "پرداخت شده"
-              : payment?.status === "processing"
-              ? "در انتظار پرداخت"
               : "پرداخت ناموفق"}
           </span>
         </div>

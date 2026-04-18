@@ -32,11 +32,11 @@ export default function LatestProductList() {
                   <p className="text-sm font-semibold ">{product.name}</p>
                   <div>
                     <span>برند : </span>
-                    <span>{product.brand.label}</span>
+                    <span>{product?.brand?.label}</span>
                   </div>
                   <div>
                     <span>دسته بندی : </span>
-                    <span>{product.category.label}</span>
+                    <span>{product?.category?.label}</span>
                   </div>
                 </div>
                 <div className=" text-xs text-primary space-y-1">

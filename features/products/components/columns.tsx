@@ -18,12 +18,12 @@ import CreateProductForm from "./CreateProductForm";
 import DuplicatedProduct from "./DuplicatedProduct";
 
 export const columns = (
-  deleteProduct: (id: string) => void
+  deleteProduct: (id: string) => void,
 ): ColumnDef<ProductClient>[] => {
   return [
     {
       accessorKey: "image",
-      header: "Image",
+      header: "",
       cell: ({ row }) => {
         const product = row.original;
         return (
@@ -42,6 +42,10 @@ export const columns = (
     {
       accessorKey: "name",
       header: "نام محصول",
+      cell: ({ row }) => {
+        const product = row.original;
+        return <h3>{product.name.slice(0,50)}</h3>;
+      },
     },
     {
       accessorKey: "price",
@@ -69,15 +73,15 @@ export const columns = (
     },
 
     {
-      accessorKey: "category.label",
+      accessorKey: "category?.label",
       header: "دسته بندی",
       cell: ({ row }) => {
         const product = row.original;
 
         return (
           <div className="flex flex-col gap-1 font-medium text-xs">
-            <span>{product.category.label}</span>
-            <span className="text-gray-400 ">{product.brand.label}</span>
+            <span>{product?.category?.label}</span>
+            <span className="text-gray-400 ">{product?.brand?.label}</span>
           </div>
         );
       },

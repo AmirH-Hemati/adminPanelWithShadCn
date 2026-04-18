@@ -19,14 +19,14 @@ export default function LatestOrders() {
           orders.map((item) => (
             <Card
               key={item._id}
-              className="flex-row w-full  items-center justify-between px-4"
+              className="flex-row w-full  items-center justify-between px-1"
             >
-              <p className="text-xs font-medium">
+              <p className="text-xs font-medium text-nowrap">
                 تاریخ :{formatDate(item.createdAt)}
               </p>
 
               <Badge variant="secondary">{item.status}</Badge>
-              <span className="text-primary font-semibold text-sm">
+              <span className="text-primary text-nowrap font-semibold text-sm">
                 {formatToman(item.totalAmount)}
               </span>
               <Link

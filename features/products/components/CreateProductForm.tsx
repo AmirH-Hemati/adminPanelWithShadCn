@@ -31,16 +31,32 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema, productSchemaType } from "../schema/schema";
 import Spinner from "@/components/Spinner";
 
-function mapEditValues(values: any) {
-  return {
-    ...values,
-    category: values.category?._id || "",
-    brand: values.brand?.value || "",
-    colors: [],
-    images: values.images || [],
-  };
-}
+const getDefaultValues = (isEditSessions, isLoading, editValues) => {
+  if (isEditSessions && !isLoading) {
+    return {
+      ...editValues,
+      brand: editValues?.brand?.value || "",
+      category: editValues?.category?._id || "",
+      colors: editValues?.colors || [],
+      images: editValues?.images || [],
+      mode: "edit",
+    };
+  }
 
+  return {
+    name: "",
+    price: 0,
+    priceDiscount: 0,
+    category: "",
+    brand: "",
+    imageCover: "",
+    images: [],
+    colors: [],
+    description: "",
+    features: [],
+    mode: "create",
+  };
+};
 function CreateProductForm({ product = {} }) {
   const { createProduct, isCreating } = useCreateProduct();
   const { updateProduct, isUpdating } = useUpdateProduct();
@@ -52,37 +68,12 @@ function CreateProductForm({ product = {} }) {
 
   const form = useForm({
     resolver: zodResolver(productSchema),
-    defaultValues: isEditSessions
-      ? { ...mapEditValues(editValues), mode: "edit" }
-      : {
-          name: "",
-          price: 0,
-          priceDiscount: 0,
-          category: "",
-          brand: "",
-          imageCover: "",
-          images: [],
-          colors: [],
-          description: "",
-          features: [],
-          mode: "create",
-        },
+    defaultValues: getDefaultValues(isEditSessions, isLoading, editValues),
   });
-
-  useEffect(() => {
-    if (!isLoading && isEditSessions) {
-      form.reset({
-        ...editValues,
-        brand: editValues?.brand?.value || "",
-        category: editValues?.category?._id || "",
-      });
-    }
-  }, [isLoading, isEditSessions]);
 
   function onSubmit(values: productSchemaType) {
     const formData = new FormData();
     const selectedBrnad = brands.find((brand) => brand.value == values.brand);
-
     const updatedValue = { ...values, brand: selectedBrnad };
     for (const key in updatedValue) {
       const value = updatedValue[key as keyof productSchemaType];
@@ -98,7 +89,13 @@ function CreateProductForm({ product = {} }) {
         formData.append(key, value);
       }
     }
-    createProduct(formData);
+
+    if (isEditSessions) {
+      updateProduct({ newProduct: formData, id: editId });
+      console.log("test");
+    } else {
+      createProduct(formData);
+    }
   }
 
   return (
@@ -342,14 +339,3 @@ function CreateProductForm({ product = {} }) {
 }
 
 export default CreateProductForm;
-
-// if (isEditSessions) {
-//   updateProduct({ newProduct: formData, id: editId });
-// } else {
-//   createProduct(formData);
-// }
-
-//  onSuccess: function () {
-//         reset?.();
-//         onCloseModal?.();
-//       },
