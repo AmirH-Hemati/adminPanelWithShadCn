@@ -8,7 +8,7 @@ export default function CommentDataBox({ comment }) {
     <Card className="p-0 overflow-hidden mt-4">
       <CardHeader className="bg-purple-600 p-3  flex flex-row justify-between items-center ">
         <span className="font-medium text-sm">
-          تاریخ ثبت کامنت : {formatDate(comment.createdAt)}
+          تاریخ ثبت کامنت : {formatDate(comment?.createdAt)}
         </span>
       </CardHeader>
 
@@ -35,17 +35,17 @@ export default function CommentDataBox({ comment }) {
           <div className="flex items-center gap-2">
             <div className="border-2 w-16 h-16 relative rounded-md overflow-hidden">
               <Image
-                src={comment.product.imageCover}
-                alt={comment.product.name}
+                src={comment?.product?.imageCover}
+                alt={comment?.product?.name}
                 fill
                 className="object-cover "
                 unoptimized
               />
             </div>
-            <span className="font-medium text-sm">{comment.product.name}</span>
+            <span className="font-medium text-sm">{comment?.product?.name}</span>
           </div>
           <div className="flex gap-2 text-xs  font-medium bg-orange-100 text-orange-800 rounded-md p-1">
-            <span> {comment?.product?.category.label}</span>
+            <span> {comment?.product?.category?.label}</span>
           </div>
         </div>
 

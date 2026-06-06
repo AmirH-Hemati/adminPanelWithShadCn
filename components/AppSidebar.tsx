@@ -96,10 +96,11 @@ export default function AppSidebar() {
                         }
                       `}
                   >
-                    <Link href={data.href} className="h-full">
                       <data.icon />
+                    <Link href={data.href} className="h-full">
                       {data.label}
                     </Link>
+                    
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -115,7 +116,7 @@ export default function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <SidebarMenuButton>
-                  <User2 /> Amir Hemati
+                  <User2 /> علی اصغر واثقی
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

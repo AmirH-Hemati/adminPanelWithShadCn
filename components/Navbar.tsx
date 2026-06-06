@@ -62,7 +62,7 @@ export default function Navbar() {
           <DropdownMenuTrigger className="cursor-pointer">
             <Avatar>
               <AvatarImage src="https://avatars.githubusercontent.com/u/1486366" />
-              <AvatarFallback>Amir</AvatarFallback>
+              <AvatarFallback>واثقی</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={10}>

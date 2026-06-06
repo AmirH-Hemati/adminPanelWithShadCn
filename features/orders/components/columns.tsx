@@ -48,7 +48,7 @@ export const columns: ColumnDef<OrderClient>[] = [
       const order = row.original;
       const quantityProduct = order?.orderItems?.reduce(
         (acc, cur) => acc + cur.quantity,
-        0
+        0,
       );
       console.log(quantityProduct);
       return (
@@ -80,16 +80,15 @@ export const columns: ColumnDef<OrderClient>[] = [
       return (
         <div className="flex flex-col gap-1">
           <span
-            className={`w-fit rounded-full px-2 py-1 text-xs ${
-              paymentColors[order?.payment?.status] ||
-              "bg-gray-100 text-gray-500"
-            }`}
+            className={`w-fit rounded-full px-2 py-1 text-xs bg-green-100 text-green-900`}
           >
-            {order?.payment?.status === "success"
+            {/* {order?.payment?.status === "success"
               ? "پرداخت شده"
+                 paymentColors[order?.payment?.status] ||
               : order?.payment?.status === "processing"
-              ? "در انتظار پرداخت"
-              : "پرداخت ناموفق"}
+                ? "در انتظار پرداخت"
+                : "پرداخت ناموفق"} */}
+            پرداخت شده
           </span>
 
           <span
@@ -100,10 +99,10 @@ export const columns: ColumnDef<OrderClient>[] = [
             {order.status === "processing"
               ? "در حال پردازش"
               : order.status === "shipped"
-              ? "در حال ارسال"
-              : order.status === "delivered"
-              ? "تحویل داده شده"
-              : "لغو شده"}
+                ? "در حال ارسال"
+                : order.status === "delivered"
+                  ? "تحویل داده شده"
+                  : "لغو شده"}
           </span>
         </div>
       );

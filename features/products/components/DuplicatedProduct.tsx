@@ -14,14 +14,14 @@ export default function DuplicatedProduct({
       category: product.category,
       price: product.price,
       priceDiscount: product.priceDiscount,
-      brand: product.brand,
-      colors: product.colors,
+      brand: JSON.stringify(product.brand),
+      colors: JSON.stringify(product.colors),
       sizes: product.sizes,
       shortDescription: product.shortDescription,
       description: product.description,
       imageCover: product.imageCover,
-      images: product.images,
-      features: product.features,
+      images: JSON.stringify(product.images),
+      features: JSON.stringify(product.features),
     });
   }
 
